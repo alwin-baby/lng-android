@@ -44,7 +44,7 @@ class MainActivity : FragmentActivity() {
 
         @JavascriptInterface
         open fun openActivity(url:String) {
-            Toast.makeText(mContext, "Opening Activity", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "Opening Player Activity", Toast.LENGTH_SHORT).show();
             val intent = Intent(mContext,FullScreenPlayerActivity::class.java)
             intent.putExtra("Url",url)
             mContext.startActivity(intent)
