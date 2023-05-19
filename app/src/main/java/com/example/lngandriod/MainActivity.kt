@@ -1,9 +1,14 @@
 package com.example.lngandriod
 
+import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
+import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 
 class MainActivity : FragmentActivity() {
@@ -26,10 +31,24 @@ class MainActivity : FragmentActivity() {
 
         webView.setInitialScale(1) // fix
         webView.loadUrl("https://amalmohann-dgnl.github.io/lightning-poc/")
+        webView.addJavascriptInterface(WebAppInterface(this),"LngAndroid")
         val webSettings = webView.settings
 //        webSettings.loadWithOverviewMode = true
         webSettings.useWideViewPort = true // fix
         webSettings.javaScriptEnabled = true // Enable JavaScript
         webSettings.builtInZoomControls = true // Enable zoom controls
+    }
+
+    open class WebAppInterface(context: Context){
+        private val mContext:Context = context
+
+        @JavascriptInterface
+        open fun openActivity(url:String) {
+            Toast.makeText(mContext, "Opening Activity", Toast.LENGTH_SHORT).show();
+            val intent = Intent(mContext,FullScreenPlayerActivity::class.java)
+            intent.putExtra("Url",url)
+            mContext.startActivity(intent)
+        }
+
     }
 }
